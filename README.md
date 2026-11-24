@@ -4,6 +4,8 @@ A static **Astro** front end that consumes the **WordPress REST API** at build t
 
 This is the pattern behind "headless WordPress": editors keep using the WordPress admin they already know, while the public site is pre-rendered HTML with no PHP and no database on the request path.
 
+**Live demo:** https://astro-wp-headless.netlify.app
+
 ## What it demonstrates
 
 - **Build-time data fetching** from `wp/v2/posts` (no runtime API calls, no keys in the browser)
