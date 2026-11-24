@@ -1,0 +1,28 @@
+---
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/blog/', label: 'Posts' },
+];
+---
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="/">astro<span>·</span>wp</a>
+    <nav aria-label="Primary">
+      <ul class="site-nav">
+        {
+          links.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                aria-current={Astro.url.pathname === link.href ? 'page' : undefined}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>

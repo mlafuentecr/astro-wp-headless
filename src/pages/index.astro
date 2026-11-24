@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import PostCard from '../components/PostCard.astro';
+import { getPosts, toSummary, type PostSummary } from '../lib/wp';
+
+let posts: PostSummary[] = [];
+let error: string | null = null;
+
+try {
+  posts = (await getPosts(6)).map(toSummary);
+} catch (err) {
+  error = err instanceof Error ? err.message : 'Unknown error';
+}
+---
+
+<Base
+  title="Astro + WordPress Headless"
+  description="A static Astro front end that consumes the WordPress REST API at build time, with React islands for client-side interactivity."
+>
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">Headless WordPress</p>
+      <h1>WordPress content, Astro performance.</h1>
+      <p class="lede">
+        Every page here is pre-rendered from the WordPress REST API at build time. No PHP on the
+        front end, no database on every request — just static HTML with React only where it earns
+        its place.
+      </p>
+      <ul class="stack">
+        <li>Astro 7</li>
+        <li>React islands</li>
+        <li>WordPress REST API</li>
+        <li>TypeScript</li>
+        <li>WCAG-aware</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section__head">
+        <h2>Latest posts</h2>
+        <p>Fetched from WordPress at build time</p>
+      </div>
+
+      {
+        error ? (
+          <p class="empty">
+            Could not reach the WordPress API. Check <code>WP_API_URL</code> and rebuild.
+          </p>
+        ) : (
+          <ul class="post-grid">
+            {posts.map((post) => (
+              <PostCard post={post} />
+            ))}
+          </ul>
+        )
+      }
+
+      <p style="margin-top:2rem">
+        <a href="/blog/">Browse all posts →</a>
+      </p>
+    </div>
+  </section>
+</Base>

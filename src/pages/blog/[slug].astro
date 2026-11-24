@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getPosts, toPlainText, type WPPost } from '../../lib/wp';
+
+export async function getStaticPaths() {
+  try {
+    const posts = await getPosts(20);
+    return posts.map((post: WPPost) => ({
+      params: { slug: post.slug },
+      props: { post },
+    }));
+  } catch {
+    return [];
+  }
+}
+
+const { post } = Astro.props as { post: WPPost };
+
+const title = toPlainText(post.title.rendered);
+const description = toPlainText(post.excerpt.rendered || post.content.rendered).slice(0, 155);
+const published = new Date(post.date).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<Base title={`${title} — astro·wp`} description={description} path={`/blog/${post.slug}/`}>
+  <article class="article">
+    <div class="wrap">
+      <a class="back-link" href="/blog/">← All posts</a>
+
+      <header class="article__header">
+        <p class="meta">
+          <time datetime={post.date}>{published}</time>
+        </p>
+        <h1 class="article__title">{title}</h1>
+      </header>
+
+      <div class="prose" set:html={post.content.rendered} />
+    </div>
+  </article>
+</Base>

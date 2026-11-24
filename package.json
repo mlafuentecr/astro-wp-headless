@@ -1,0 +1,23 @@
+{
+  "name": "astro-wp-headless",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Astro front end consuming the WordPress REST API (headless WordPress) with React islands.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/react": "^7.0.1",
+    "astro": "^7.3.8",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0"
+  }
+}

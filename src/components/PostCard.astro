@@ -1,0 +1,30 @@
+---
+import type { PostSummary } from '../lib/wp';
+
+interface Props {
+  post: PostSummary;
+}
+
+const { post } = Astro.props;
+---
+
+<li>
+  <article class="card">
+    {
+      post.image && (
+        <div class="card__media">
+          <img src={post.image} alt={post.imageAlt} loading="lazy" decoding="async" width="640" height="360" />
+        </div>
+      )
+    }
+    <p class="meta">
+      <time datetime={post.date}>{post.dateLabel}</time>
+      <span aria-hidden="true">·</span>
+      <span>{post.readingMinutes} min read</span>
+    </p>
+    <h3 class="card__title">
+      <a href={`/blog/${post.slug}/`}>{post.title}</a>
+    </h3>
+    <p class="card__excerpt">{post.excerpt}</p>
+  </article>
+</li>
